@@ -1,5 +1,6 @@
 package br.com.api.timesheet.resource.employee;
 
+import br.com.api.timesheet.dto.IdHolder;
 import br.com.api.timesheet.entity.Employee;
 import br.com.api.timesheet.enumeration.StatusEnum;
 import br.com.api.timesheet.service.EmployeeService;
@@ -54,7 +55,7 @@ public class EmployeeResource {
             .size(size)
             .name(name)
             .recordNumber(recordNumber)
-            .companyId(companyId)
+            .company(new IdHolder<>(companyId))
             .status(StringUtils.isNotBlank(status) ? StatusEnum.valueOf(status) : null)
             .build();
 

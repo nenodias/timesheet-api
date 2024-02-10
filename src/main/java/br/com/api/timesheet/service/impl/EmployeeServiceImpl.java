@@ -11,6 +11,8 @@ import br.com.api.timesheet.resource.employee.EmployeeRequest;
 import br.com.api.timesheet.service.CompanyService;
 import br.com.api.timesheet.service.EmployeeService;
 import java.util.Optional;
+
+import br.com.api.timesheet.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +28,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
   @Autowired
   private CompanyService companyService;
+
+  @Autowired
+  private PositionService positionService;
 
   /**
    * Find all employees.
@@ -60,12 +65,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     Employee employee = Employee.builder()
             .id(employeeRequest.getId())
             .company(companyService.findById(employeeRequest.getCompanyId().orElse(null)))
-            .costCenter(null)
-            .costHour(null)
+            .costCenter(employeeRequest.getCostCenter().orElse(null))
+            .costHour(employeeRequest.getCostHour().orElse(null))
             .name(employeeRequest.getName().orElse(null))
-            .officeHour(null)
+            .officeHour(employeeRequest.getOfficeHour().orElse(null))
             .recordNumber(employeeRequest.getRecordNumber().orElse(null))
-            .position(null)
+            .position(positionService.findById(employeeRequest.getPositionId().orElse(null)))
             .status(employeeRequest.getStatus().orElse(null))
             .build();
     verifyIfEmployeeExist(employee);
