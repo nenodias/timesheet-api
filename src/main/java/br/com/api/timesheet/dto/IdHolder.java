@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class IdHolder<T> {
 
-    private T id;
+  private T id;
 }

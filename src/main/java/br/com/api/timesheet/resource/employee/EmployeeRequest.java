@@ -3,12 +3,10 @@ package br.com.api.timesheet.resource.employee;
 import br.com.api.timesheet.dto.IdHolder;
 import br.com.api.timesheet.enumeration.OfficeHoursEnum;
 import br.com.api.timesheet.enumeration.StatusEnum;
-
 import java.util.Optional;
 import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-
 import lombok.Builder;
 import lombok.Data;
 

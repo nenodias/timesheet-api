@@ -10,9 +10,8 @@ import br.com.api.timesheet.repository.specification.EmployeeRepositorySpecifica
 import br.com.api.timesheet.resource.employee.EmployeeRequest;
 import br.com.api.timesheet.service.CompanyService;
 import br.com.api.timesheet.service.EmployeeService;
-import java.util.Optional;
-
 import br.com.api.timesheet.service.PositionService;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,6 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
   /**
    * Find all employees.
+   *
    * @param request - request
    * @return
    */
@@ -46,6 +46,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
   /**
    * Find employee by id.
+   *
    * @param id - id
    * @return
    */
@@ -58,21 +59,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 
   /**
    * Save employee.
+   *
    * @param employeeRequest - request
    * @return
    */
   public Employee save(EmployeeRequest employeeRequest) {
     Employee employee = Employee.builder()
             .id(employeeRequest.getId())
-            .company(companyService.findById(employeeRequest.getCompanyId().orElse(null)))
-            .costCenter(employeeRequest.getCostCenter().orElse(null))
-            .costHour(employeeRequest.getCostHour().orElse(null))
-            .name(employeeRequest.getName().orElse(null))
-            .officeHour(employeeRequest.getOfficeHour().orElse(null))
-            .recordNumber(employeeRequest.getRecordNumber().orElse(null))
-            .position(positionService.findById(employeeRequest.getPositionId().orElse(null)))
-            .status(employeeRequest.getStatus().orElse(null))
-            .build();
+            .company(companyService.findById(employeeRequest.getCompanyId()
+                    .orElse(null))).costCenter(employeeRequest.getCostCenter()
+                    .orElse(null)).costHour(employeeRequest.getCostHour()
+                    .orElse(null)).name(employeeRequest.getName()
+                    .orElse(null)).officeHour(employeeRequest.getOfficeHour()
+                    .orElse(null)).recordNumber(employeeRequest.getRecordNumber()
+                    .orElse(null))
+            .position(positionService.findById(employeeRequest.getPositionId()
+                    .orElse(null))).status(employeeRequest.getStatus()
+                    .orElse(null)).build();
     verifyIfEmployeeExist(employee);
     return employeeRepository.save(employee);
   }
@@ -82,8 +85,8 @@ public class EmployeeServiceImpl implements EmployeeService {
   }
 
   private void verifyIfEmployeeExist(final Employee employee) {
-    Optional<Employee> employeeDB = employeeRepository.findByRecordNumber(
-            employee.getRecordNumber());
+    Optional<Employee> employeeDB = employeeRepository
+            .findByRecordNumber(employee.getRecordNumber());
     if (employeeDB.isPresent() && !employeeDB.get().getId().equals(employee.getId())) {
       throw new BusinessException("error-employee-8", HttpStatus.BAD_REQUEST);
     }
